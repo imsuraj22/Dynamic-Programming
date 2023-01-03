@@ -46,17 +46,17 @@ public class ChocolatePickup {
     */
 
     public static int maximumChocolates(int m, int n, int[][] grid) {
-		int dp[][][]=new int[m][n][n];
+        int dp[][][]=new int[m][n][n];
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 
-                Arrays.fill(dp[i][j], -1);
+                Arrays.fill(dp[i][j], 0);
             }
         }
 
         for(int j1=0;j1<n;j1++){
             for(int j2=0;j2<n;j2++){
-                if(j1==j2) dp[m-1][j1][j2]=grid[m-1][j2];
+                if(j1==j2) dp[m-1][j1][j2]=grid[m-1][j1];
                 else dp[m-1][j1][j2]=grid[m-1][j1]+grid[m-1][j2];
             }
         }
@@ -64,27 +64,30 @@ public class ChocolatePickup {
         for(int i=m-2;i>=0;i--){
             for(int j1=0;j1<n;j1++){
                 for(int j2=0;j2<n;j2++){
-                    int maxi=0;
+                    int maxi=Integer.MIN_VALUE;;
 
-                    for(int dj1=-1;dj1<=+1;dj1++){
-                        int val=0;
-                        for(int dj2=-1;dj2<=+1;dj2++){
+                    for(int dj1=-1;dj1<=1;dj1++){
+                        
+                        for(int dj2=-1;dj2<=1;dj2++){
+                            int val=0;
                             if(j1==j2) val=grid[i][j1];
                             else val=grid[i][j1]+grid[i][j2];
 
-                            if(j1+dj1>=0 && j1+dj1<n && j2+dj2>=0 && j2+dj2<n){
-                                val+=dp[i+1][j1+dj1][j2+dj2];
-                            }else{
+                            if(j1+dj1<0 || j1+dj1>=n || j2+dj2<0 || j2+dj2>=n){
                                 val+=(int)Math.pow(-10, 9);
+                                
+                            }else{
+                                val+=dp[i+1][j1+dj1][j2+dj2];
                                 maxi=Math.max(maxi, val);
                             }
                         }
                     }
+                     dp[i][j1][j2] = maxi;
                 }
             }
         }
         return dp[0][0][n-1];
-	}
+    }
     public static void main(String[] args) {
         int matrix[][] = {{2,3,1,2},
         {3,4,2,2},
