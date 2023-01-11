@@ -61,6 +61,6 @@ public class NumberOfSubset {
     
     public static void main(String[] args) {
         int arr[]=new int[]{16,8,2,4,2};
-        System.out.println(findWays(arr, 8));
+        System.out.println(findWays(arr, 8 ));
     }
 }

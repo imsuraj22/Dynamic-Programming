@@ -51,7 +51,7 @@ public class MazeOpstacles {
 
                    dp[i][j]=(up+left)%(int)M;
                 } 
-                
+                 
             }
         }
 
